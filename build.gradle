@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'application'
+}
+
+version '1.0-SNAPSHOT'
+
+mainClassName = 'main.java.Brain'
+
+sourceCompatibility = 1.8
+
+run {
+    systemProperty 'java.library.path','lib/native_libs'
+    if (project.hasProperty("runArgs")) {
+        args Eval.me(runArgs)
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src"]
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.9'
+}
